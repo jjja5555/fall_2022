@@ -258,32 +258,21 @@ public class Main {
     // Q8
 
     static List<List<Integer>> output = new ArrayList();
-    static List<Integer> [] array = new ArrayList[100];
     public static List<List<Integer>> findLeaves(TreeNode root) {
-        dfs(root);
-        for(int i = 0; i < 100;i++){
-            if(array[i]!= null)
-                output.add(array[i]);
-        }
+        int length = dfs(root);
         return output;
     }
 
     public static int dfs(TreeNode node){
         if(node == null){
             return 0;
-        }else if(node.left == null && node.right == null){
-            if(array[0] == null){
-                array[0] = new ArrayList<Integer>();
-            }
-            array[0].add(node.val);
-            return 0;
         }else{
-            int level =  1 + Math.max(dfs(node.left),dfs(node.right));
-            if(array[level] == null){
-                array[level] = new ArrayList<Integer>();
+            int level =  Math.max(dfs(node.left),dfs(node.right));
+            if(level == output.size()){
+                output.add(new ArrayList<Integer>());
             }
-            array[level].add(node.val);
-            return level;
+            output.get(level).add(node.val);
+            return level+1;
         }
     }
 }
