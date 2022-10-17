@@ -30,7 +30,7 @@ public class Main {
 
         // Q7 Test
         TreeNode q7 = new TreeNode(3, new TreeNode(5, new TreeNode(6), new TreeNode(2, new TreeNode(7), new TreeNode(4))), new TreeNode(1, new TreeNode(0), new TreeNode(8)));
-        System.out.println(lowestCommonAncestor(q7, q7.left, q7.right).val);
+        System.out.println(lowestCommonAncestorDFS(q7, q7.left, q7.right).val);
 
         //Q8 Test
         TreeNode q8 = new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5)), new TreeNode(3));
@@ -190,7 +190,7 @@ public class Main {
         return res;
     }
 
-    // Q7
+    // Q7 BFS
     public static TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {
         if(dfsFoundKid(p,q)){
             return p;
@@ -253,6 +253,35 @@ public class Main {
         }
 
         return dfsFoundKid(p.left,q) || dfsFoundKid(p.right,q);
+    }
+
+    //Q8 DFS
+    static TreeNode result = null;
+    public static TreeNode lowestCommonAncestorDFS(TreeNode root, TreeNode p, TreeNode q) {
+        //0 contains nonthing
+        //1 contains p
+        //2 contains q
+        //3 contains p&q
+        dfs(root, p, q);
+        return result;
+    }
+
+    static int dfs(TreeNode root, TreeNode p, TreeNode q){
+        if(root == null){
+            return 0;
+        }
+        int code;
+        if(root == p){
+            code = 1 + dfs(root.left, p, q) + dfs(root.right, p, q);
+        }else if(root == q){
+            code =  2 + dfs(root.left, p, q) + dfs(root.right, p, q);
+        }else{
+            code = dfs(root.left, p, q) + dfs(root.right, p, q);
+        }
+        if(result == null && code == 3){
+            result = root;
+        }
+        return code;
     }
 
     // Q8
