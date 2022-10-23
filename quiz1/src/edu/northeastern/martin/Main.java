@@ -33,6 +33,11 @@ public class Main {
         TreeNode b = new TreeNode(1, new TreeNode(2), new TreeNode(3));
         boolean result = checkTreeNode(a,b);
         System.out.println(result);
+
+        // Q3 Test
+        TreeNode q3 = new TreeNode(3, new TreeNode(9), new TreeNode(20, new TreeNode(15), new TreeNode(7)));
+        System.out.println(levelOrderBFS(q3));
+        System.out.println(levelOrderDFS(q3));
     }
 
 
